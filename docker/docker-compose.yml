@@ -1,0 +1,15 @@
+services:
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - "5000:5000"
+    environment:
+      - BACKEND_URL=http://localhost:8080
+    depends_on:
+      - backend
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - "8080:8080"
