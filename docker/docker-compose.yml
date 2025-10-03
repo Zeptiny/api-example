@@ -1,6 +1,5 @@
 services:
   frontend:
-    container_name: frontend
     build: 
       context: ../basic/frontend/
       dockerfile: ../../docker/frontend/Dockerfile
@@ -11,7 +10,6 @@ services:
     depends_on:
       - backend
   backend:
-    container_name: backend
     build:
       context: ../basic/backend/
       dockerfile: ../../docker/backend/Dockerfile

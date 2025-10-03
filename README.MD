@@ -35,13 +35,30 @@ cd api-example
 7. Open a new terminal window and navigate to the `frontend` folder
 8. Activate the virtual environment you created in step 3
 9. Install the required packages with `pip install -r requirements.txt`
-10. Run the frontend server with `BACKEND_URL=http://localhost:8080 flask run`
+10. Run the frontend server with `flask run`
 11. Open your browser and go to `http://localhost:5000`
 12. You should see the frontend page displaying data from the backend API.
 
 ## Docker
 1. Make sure you have Docker installed and running.
 2. Navigate to the `docker` folder in your terminal.
+3. Build and run the Docker images with `docker compose up`.
+4. Open your browser and go to `http://localhost:5000`.
+5. You should see the frontend page displaying data from the backend API.
+
+## Docker With Database
+This example uses a PostgreSQL database to store user data in a persistent manner.
+The database is initialized with a `users` table when the backend server starts.
+
+You can configure the database connection using the following environment variables:
+- `DB_HOST`: The hostname of the database server (default: `db`)
+- `DB_PORT`: The port of the database server (default: `5432`)
+- `DB_NAME`: The name of the database (default: `backend_db`)
+- `DB_USER`: The username to connect to the database (default: `admin`)
+- `DB_PASSWORD`: The password to connect to the database (default: `admin`)
+
+1. Make sure you have Docker installed and running.
+2. Navigate to the `docker-with-db` folder in your terminal.
 3. Build and run the Docker images with `docker compose up`.
 4. Open your browser and go to `http://localhost:5000`.
 5. You should see the frontend page displaying data from the backend API.
