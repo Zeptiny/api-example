@@ -4,8 +4,10 @@ from flask_cors import cross_origin
 import random
 import itertools
 import os
+from datetime import datetime
 
 app = Flask(__name__)
+start_time = datetime.now()
 
 # Database configuration
 USE_DATABASE = os.getenv('USE_DATABASE', 'false').lower() == 'true'
@@ -79,7 +81,7 @@ def get_status():
         "status": "OK",
         "message": "Service is running",
         "storage": storage_mode,
-        "uptime": os.times()[0] - start_time
+        "uptime": round((datetime.now() - start_time).total_seconds())
     }
     return jsonify(data)
 
@@ -165,7 +167,6 @@ def manage_user(user_id):
 
 if __name__ == '__main__':
     try:
-        start_time = os.times()
         app.run(debug=True)
     finally:
         if USE_DATABASE and db_conn:
