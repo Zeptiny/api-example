@@ -11,6 +11,7 @@ The frontend was made with flask to make use of environment variables and Jinja 
 
 ## Frontend
 - `/`: Home page, displays the data from each API route with a reload button.
+- `/users`: Displays all users and a form to create a new user. With options to delete or update each user.
 
 # Running the example
 There are two possible ways to run the example, either with Docker or manually with Python.
