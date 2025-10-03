@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6">User Management</h1>
+
+    <div class="card bg-base-100 shadow-xl mb-8">
+        <div class="card-body">
+            <h2 class="card-title">Add User</h2>
+            <form id="add-user-form" class="flex flex-col md:flex-row gap-2 items-center">
+                <input type="text" id="username" placeholder="Username" required class="input input-bordered input-primary w-full max-w-xs" />
+                <input type="email" id="email" placeholder="Email" required class="input input-bordered input-primary w-full max-w-xs" />
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title">User List</h2>
+            <div id="message" class="mb-2"></div>
+            <div class="overflow-x-auto">
+                <table id="users-table" class="table table-zebra w-full">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const backendUrl = '{{ context.backend_url }}';
+    const usersTableBody = document.querySelector("#users-table tbody");
+    const messageDiv = document.getElementById("message");
+
+    // Fetch and display all users
+    function loadUsers() {
+        fetch(backendUrl + "/users")
+            .then(res => res.json())
+            .then(users => {
+                usersTableBody.innerHTML = "";
+                users.forEach(user => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td><input type="text" value="${user.username}" id="username-${user.id}" class="input input-bordered input-sm w-full max-w-xs" /></td>
+                        <td><input type="email" value="${user.email}" id="email-${user.id}" class="input input-bordered input-sm w-full max-w-xs" /></td>
+                        <td>
+                            <div class="join">
+                                <button onclick="updateUser(${user.id})" class="btn btn-success btn-sm join-item">Update</button>
+                                <button onclick="deleteUser(${user.id})" class="btn btn-error btn-sm join-item">Delete</button>
+                            </div>
+                        </td>
+                    `;
+                    usersTableBody.appendChild(row);
+                });
+            })
+            .catch(() => {
+                messageDiv.innerHTML = `<div class="alert alert-error">Error loading users</div>`;
+            });
+    }
+
+    // Add a new user
+    document.getElementById("add-user-form").addEventListener("submit", e => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+
+        fetch(backendUrl + "/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to add user");
+            return res.json();
+        })
+        .then(() => {
+            messageDiv.innerHTML = `<div class="alert alert-success">User added!</div>`;
+            loadUsers();
+            e.target.reset();
+        })
+        .catch(() => {
+            messageDiv.innerHTML = `<div class="alert alert-error">Error adding user</div>`;
+        });
+    });
+
+    // Update a user
+    function updateUser(id) {
+        const username = document.getElementById(`username-${id}`).value;
+        const email = document.getElementById(`email-${id}`).value;
+
+        fetch(backendUrl + `/users/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to update user");
+            return res.json();
+        })
+        .then(() => {
+            messageDiv.innerHTML = `<div class="alert alert-success">User updated!</div>`;
+            loadUsers();
+        })
+        .catch(() => {
+            messageDiv.innerHTML = `<div class="alert alert-error">Error updating user</div>`;
+        });
+    }
+
+    // Delete a user
+    function deleteUser(id) {
+        fetch(backendUrl + `/users/${id}`, { method: "DELETE" })
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to delete user");
+            messageDiv.innerHTML = `<div class="alert alert-success">User deleted!</div>`;
+            loadUsers();
+        })
+        .catch(() => {
+            messageDiv.innerHTML = `<div class="alert alert-error">Error deleting user</div>`;
+        });
+    }
+
+    // Initial load
+    window.onload = loadUsers;
+</script>
+{% endblock content %}
+

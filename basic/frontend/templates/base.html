@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    
+</body>
+    <nav>
+        <div class="navbar bg-base-100 shadow-lg mb-6">
+            <div class="flex-1 px-2 mx-2">
+                <a class="text-lg font-bold" href="/">API Example</a>
+            </div>
+            <div class="flex-none hidden lg:block">
+                <ul class="menu menu-horizontal">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/users">Users</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock content %}
+</html>
