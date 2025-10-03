@@ -6,10 +6,11 @@ The frontend was made with flask to make use of environment variables and Jinja 
 - `/data`: Returns a sample item, with id, name and description.
 - `/random`: Returns a random number and generated string
 - `/status`: Returns a simple status message
-- `/users`: Returns 5 randomly selected usernames from a predefined list. Each user contains an id, username and email.
+- `/users`: Get all users (GET) or create a new user (POST)
+- `/users/<id>`: Get a user by ID (GET) or delete a user by ID (DELETE)
 
 ## Frontend
-- `/`: Home page, displays the data from each API route with a roload button.
+- `/`: Home page, displays the data from each API route with a reload button.
 
 # Running the example
 There are two possible ways to run the example, either with Docker or manually with Python.
