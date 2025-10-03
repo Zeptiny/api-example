@@ -1,5 +1,8 @@
-Frontend and Backend / API communication examples, both made with Flask.
-The frontend was made with flask to make use of environment variables and Jinja templating.
+This repository demonstrates how a simple Flask frontend can interact with a Flask backend/API. It also includes Docker and Docker Compose setups, with and without a PostgreSQL database, to show different deployment scenarios.
+
+```
+Frontend (Flask, port 5000)  --->  Backend API (Flask, port 8080)  --->  PostgreSQL DB (port 5432, optional)
+```
 
 # Routes
 ## Backend / API
@@ -49,7 +52,7 @@ cd api-example
 
 ## Docker With Database
 This example uses a PostgreSQL database to store user data in a persistent manner.
-The database is initialized with a `users` table when the backend server starts.
+When the backend starts, it automatically checks and creates the `users` table if it does not exist.
 
 You can configure the database connection using the following environment variables:
 - `DB_HOST`: The hostname of the database server (default: `db`)
