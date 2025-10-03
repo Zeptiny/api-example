@@ -7,7 +7,7 @@ The frontend was made with flask to make use of environment variables and Jinja 
 - `/random`: Returns a random number and generated string
 - `/status`: Returns a simple status message
 - `/users`: Get all users (GET) or create a new user (POST)
-- `/users/<id>`: Get a user by ID (GET) or delete a user by ID (DELETE)
+- `/users/<id>`: Delete a user by ID (DELETE) or update a user by ID (PUT)
 
 ## Frontend
 - `/`: Home page, displays the data from each API route with a reload button.
